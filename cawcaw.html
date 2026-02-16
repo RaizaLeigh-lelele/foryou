@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chicken Romance Joke</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: "Segoe UI", sans-serif;
+}
+
+body{
+    height:100vh;
+    background:url("https://media.giphy.com/media/HA1nDms2o1MFq/giphy-downsized-large.gif") no-repeat center center fixed;
+    background-size:cover;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.overlay{
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,0.45);
+    backdrop-filter:blur(2px);
+}
+
+.card{
+    position:relative;
+    z-index:2;
+    background:rgba(255,255,255,0.1);
+    padding:40px 60px;
+    border-radius:20px;
+    text-align:center;
+    backdrop-filter:blur(12px);
+    box-shadow:0 20px 50px rgba(0,0,0,0.3);
+    max-width:600px;
+}
+
+#joke{
+    font-size:28px;
+    font-weight:bold;
+    color:#fff;
+    cursor:pointer;
+    transition:0.4s;
+}
+
+.revealed{
+    color:#ffe97a;
+    text-shadow:0 0 15px rgba(255,233,122,0.9);
+}
+
+.hint{
+    margin-top:12px;
+    color:#ddd;
+    font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<div class="card">
+    <div id="joke">Why did the chicken cross the road?</div>
+    <div class="hint">(click the line)</div>
+</div>
+
+<audio id="pooAudio" src="poo.mp3" preload="auto"></audio>
+
+<script>
+const joke = document.getElementById("joke");
+const audio = document.getElementById("pooAudio");
+let revealed = false;
+
+window.addEventListener("load", () => {
+    audio.volume = 0.7;
+    audio.play().catch(() => {
+        console.log("Autoplay blocked until user clicks");
+    });
+});
+
+joke.addEventListener("click", () => {
+    if(!revealed){
+        joke.textContent =
+        "Because they crossed the road and found a place that felt like home.";
+        joke.classList.add("revealed");
+        revealed = true;
+    } else {
+        joke.textContent = "Why did the chicken cross the road?";
+        joke.classList.remove("revealed");
+        revealed = false;
+    }
+
+    audio.currentTime = 0;
+    audio.play();
+});
+</script>
+
+</body>
+</html>
